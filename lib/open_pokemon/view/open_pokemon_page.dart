@@ -18,7 +18,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
 
   @override
   void initState() {
-    current = const About();
+    current = About(pokemon: widget.pokemon);
     super.initState();
   }
 
@@ -91,7 +91,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                     ),
                   ],
                 ),
-                Container(
+                SizedBox(
                   height: 500,
                   child: Column(
                     children: [
@@ -100,7 +100,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                         children:  [
                           InkWell(
                             onTap: () {
-                              changeCurrent(const About());
+                              changeCurrent(About(pokemon: widget.pokemon));
                             },
                             child: const Text(
                               "About",
@@ -112,7 +112,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                           ),
                           InkWell(
                             onTap: () {
-                              changeCurrent(const Abilities());
+                              changeCurrent(Abilities(pokemon: widget.pokemon));
                             },
                             child: const Text(
                               "Abilities",
@@ -124,7 +124,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                           ),
                           InkWell(
                             onTap: () {
-                              changeCurrent(const Moves());
+                              changeCurrent(Moves(pokemon: widget.pokemon));
                             },
                             child: const Text(
                               "Moves",
@@ -168,60 +168,110 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
 
 
 class About extends StatelessWidget {
-  const About({Key? key}) : super(key: key);
+  final Pokemon pokemon;
+  const About({Key? key, required this.pokemon}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+
+    double width = MediaQuery.of(context).size.width;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      width: width,
       height: 400,
-      child: Center(
-        child: Text(
-          "About",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('Height: ${pokemon.height} m',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ),
+          Text('Weight: ${pokemon.weight} lbs',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text('Base Experience: ${pokemon.baseExperience}',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text('Evolution: ${pokemon.order}',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      )
     );
   }
 }
 
 class Abilities extends StatelessWidget {
-  const Abilities({Key? key}) : super(key: key);
+  final Pokemon pokemon;
+  const Abilities({Key? key, required this.pokemon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+
+    double width = MediaQuery.of(context).size.width;
+
+    return SizedBox(
+      width: width,
       height: 400,
-      child: Center(
-        child: Text(
-          "Abilities",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(10),
+        itemCount: pokemon.abilities.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+              "Ability# ${index + 1} ${pokemon.abilities[index].ability.name.toUpperCase()}",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 class Moves extends StatelessWidget {
-  const Moves({Key? key}) : super(key: key);
+  final Pokemon pokemon;
+  const Moves({Key? key, required this.pokemon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+
+    double width = MediaQuery.of(context).size.width;
+
+    return SizedBox(
+      width: width,
       height: 400,
-      child: Center(
-        child: Text(
-          "Moves",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(10),
+        itemCount: pokemon.moves.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+              "Move# ${index + 1} ${pokemon.moves[index].move.name.toUpperCase()}",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -53,18 +53,22 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
             return const Center(child: CircularProgressIndicator());
             break;
           case ListPokemonStatus.success:
-            return  ListView.builder(
-              controller: _scrollController,
-              itemCount: state.hasReachedMax
-                  ? state.pokemons.length
-                  : state.pokemons.length + 1,
-              itemBuilder: (context, index) {
-                return index >= state.pokemons.length
-                    ? const Center(child: CircularProgressIndicator())
-                    : ListTile(
-                  title: PokemonCard(pokemon: state.pokemons[index]),
-                );
-              },
+            return  Container(
+              padding: const EdgeInsets.only(top: 50),
+              child: ListView.builder(
+                padding: const EdgeInsets.all(0),
+                controller: _scrollController,
+                itemCount: state.hasReachedMax
+                    ? state.pokemons.length
+                    : state.pokemons.length + 1,
+                itemBuilder: (context, index) {
+                  return index >= state.pokemons.length
+                      ? const Center(child: CircularProgressIndicator())
+                      : ListTile(
+                    title: PokemonCard(pokemon: state.pokemons[index]),
+                  );
+                },
+              ),
             );
             break;
           case ListPokemonStatus.error:

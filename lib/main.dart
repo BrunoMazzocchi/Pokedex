@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:poke_client/poke_client.dart';
 import 'package:pokedex/list/view/list_pokemon_page.dart';
 import 'package:pokedex/search/cubit/pokemon_search_cubit.dart';
-import 'package:http/http.dart' as http;
+
 import 'list/bloc/list_pokemon_bloc.dart';
+import 'open_pokemon/view/open_pokemon_page.dart';
 import 'search/view/search_pokemon_page.dart';
 
 void main() {
@@ -22,12 +24,15 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => PokemonSearchCubit(PokeRepository(PokeApiClient())),
+          create: (context) =>
+              PokemonSearchCubit(PokeRepository(PokeApiClient())),
           child: const PokemonAppView(),
         ),
         BlocProvider(
-          create: (context) => ListPokemonBloc(httpClient: http.Client(), repository: PokeRepository(PokeApiClient()))..add(ListPokemonSearchAll())
-        )
+            create: (context) => ListPokemonBloc(
+                httpClient: http.Client(),
+                repository: PokeRepository(PokeApiClient()))
+              ..add(ListPokemonSearchAll()))
       ],
       child: const PokemonAppView(),
     );
@@ -50,6 +55,12 @@ class PokemonAppView extends StatelessWidget {
     );
 
     return MaterialApp(
+      routes: {
+        "/open_pokemon": (context) {
+          final Pokemon pokemon = ModalRoute.of(context)!.settings.arguments as Pokemon;
+          return OpenPokemonPage(pokemon: pokemon);
+        }
+      },
       theme: ThemeData(
         primaryColor: Colors.blue,
         textTheme: GoogleFonts.rajdhaniTextTheme(),
@@ -59,7 +70,6 @@ class PokemonAppView extends StatelessWidget {
   }
 }
 
-
 class NavigationController extends StatefulWidget {
   const NavigationController({Key? key}) : super(key: key);
 
@@ -68,7 +78,6 @@ class NavigationController extends StatefulWidget {
 }
 
 class _NavigationControllerState extends State<NavigationController> {
-
   int _selectedIndex = 0;
 
   @override
@@ -99,7 +108,6 @@ class _NavigationControllerState extends State<NavigationController> {
           ),
         ],
       ),
-
     );
   }
 }

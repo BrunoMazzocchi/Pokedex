@@ -27,4 +27,18 @@ class PokeApiClient {
       );
     }
   }
+
+  Future<InfiniteListPokemon> searchAll([int offset = 0]) async {
+    final response = await httpClient.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?offset=$offset&limit=30'));
+    if (response.statusCode == 200) {
+      final pokemon = json.decode(response.body) as Map<String, dynamic>;
+      return InfiniteListPokemon.fromJson(pokemon);
+    } else {
+      throw PokemonError(
+        message: 'Error searching your pokemon',
+        error: response.body,
+      );
+    }
+  }
+
 }

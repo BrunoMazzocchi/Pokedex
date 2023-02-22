@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poke_client/poke_client.dart';
 import 'package:pokedex/search/cubit/pokemon_search_cubit.dart';
 
+import '../../widgets/pokemon_card.dart';
+
 class SearchPokemonPage extends StatefulWidget {
   const SearchPokemonPage({Key? key}) : super(key: key);
 
@@ -40,6 +42,7 @@ class _AppViewState extends State<AppView> {
   @override
   void dispose() {
     _textController.dispose();
+
     super.dispose();
   }
 
@@ -101,58 +104,8 @@ class _AppViewState extends State<AppView> {
   }
 }
 
-class PokemonCard extends StatefulWidget {
-  final Pokemon pokemon;
 
-  const PokemonCard({Key? key, required this.pokemon}) : super(key: key);
 
-  @override
-  State<PokemonCard> createState() => _PokemonCardState();
-}
-
-class _PokemonCardState extends State<PokemonCard> {
-  late double width = MediaQuery.of(context).size.width;
-  late double height = MediaQuery.of(context).size.height;
-  final String imageUrl =
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: 120,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            offset: Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Image.network("$imageUrl${widget.pokemon.id}.png"),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Pokemon name: ${widget.pokemon.name}"),
-              Text("Pokemon id: ${widget.pokemon.id}"),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class NotFoundCard extends StatelessWidget {
   const NotFoundCard({Key? key}) : super(key: key);

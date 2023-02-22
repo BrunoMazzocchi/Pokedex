@@ -12,4 +12,8 @@ class PokeRepository {
     return client.search(query);
   }
 
+  Future<InfiniteListPokemon> searchAll([int offset = 0]) async {
+    return client.searchAll(offset);
+  }
+
 }

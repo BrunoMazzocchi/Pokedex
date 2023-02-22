@@ -4,8 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:poke_client/poke_client.dart';
+import 'package:pokedex/list/view/list_pokemon_page.dart';
 import 'package:pokedex/search/cubit/pokemon_search_cubit.dart';
-
+import 'package:http/http.dart' as http;
+import 'list/bloc/list_pokemon_bloc.dart';
 import 'search/view/search_pokemon_page.dart';
 
 void main() {
@@ -17,8 +19,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PokemonSearchCubit(PokeRepository(PokeApiClient())),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => PokemonSearchCubit(PokeRepository(PokeApiClient())),
+          child: const PokemonAppView(),
+        ),
+        BlocProvider(
+          create: (context) => ListPokemonBloc(httpClient: http.Client(), repository: PokeRepository(PokeApiClient()))..add(ListPokemonSearchAll())
+        )
+      ],
       child: const PokemonAppView(),
     );
   }
@@ -67,7 +77,7 @@ class _NavigationControllerState extends State<NavigationController> {
       body: IndexedStack(
         index: _selectedIndex,
         children: const [
-          SearchPokemonPage(),
+          ListPokemonPage(),
           SearchPokemonPage(),
         ],
       ),

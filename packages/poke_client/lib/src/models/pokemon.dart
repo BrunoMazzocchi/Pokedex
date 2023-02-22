@@ -34,6 +34,17 @@ class Pokemon {
     );
   }
 
+  static final empty = Pokemon(
+      id: 0,
+      name: '',
+      height: 0,
+      weight: 0,
+      order: 0,
+      baseExperience: 0,
+      abilities: [],
+      moves: []
+  );
+
   final int id;
   final String name;
   final int height;

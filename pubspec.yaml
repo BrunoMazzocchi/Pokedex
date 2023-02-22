@@ -38,6 +38,9 @@ dependencies:
   poke_client:
     path: packages/poke_client
   bloc: ^7.0.0
+  json_annotation: ^4.8.0
+  equatable: ^2.0.3
+  google_fonts: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

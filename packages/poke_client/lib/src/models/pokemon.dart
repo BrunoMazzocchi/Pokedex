@@ -7,6 +7,7 @@ import 'types.dart';
 /// A Pokemon model class
 @JsonSerializable()
 class Pokemon {
+  /// A Pokemon model class
   const Pokemon(
       {required this.id,
       required this.name,
@@ -18,6 +19,7 @@ class Pokemon {
       required this.moves,
       required this.types});
 
+  /// Creates a [Pokemon] from a JSON object
   factory Pokemon.fromJson(Map<String, dynamic> json) {
     return Pokemon(
       id: json['id'] as int,
@@ -38,7 +40,8 @@ class Pokemon {
     );
   }
 
-  static final empty = Pokemon(
+  /// Creates a JSON object from a [Pokemon]
+  static const empty = Pokemon(
       id: 0,
       name: '',
       height: 0,
@@ -48,6 +51,9 @@ class Pokemon {
       abilities: [],
       moves: [],
       types: []);
+
+
+
 
   final int id;
   final String name;

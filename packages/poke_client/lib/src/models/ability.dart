@@ -5,8 +5,10 @@ import 'package:json_annotation/json_annotation.dart';
 @JsonSerializable()
 class Ability {
 
+  /// Ability model
   const Ability({required this.name, required this.url});
 
+  /// Creates a [Ability] from a JSON object
   factory Ability.fromJson(Map<String, dynamic> json) {
     return Ability(
       name: json['name'] as String,

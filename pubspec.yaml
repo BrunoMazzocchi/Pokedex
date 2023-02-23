@@ -23,15 +23,24 @@ dependencies:
   intl: any
   flutter_localizations:
     sdk: flutter
+  flutter_launcher_icons: ^0.11.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.0.15
 
-
+flutter_icons:
+  image_path: "assets/pokeball.png"
+  android: true
+  ios: true
   flutter_lints: ^2.0.0
 
 flutter:
   generate: true
   uses-material-design: true
+
+
+  assets:
+    - assets/
+

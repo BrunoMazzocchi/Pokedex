@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poke_client/poke_client.dart';
+import 'package:pokedex/widgets/type_icon.dart';
 
 import '../../constants.dart';
 
@@ -15,6 +16,8 @@ class OpenPokemonPage extends StatefulWidget {
 class _OpenPokemonPageState extends State<OpenPokemonPage> {
   late Widget current;
   late String type;
+  late String name;
+
   @override
   void initState() {
     current = About(pokemon: widget.pokemon);
@@ -24,17 +27,19 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
         .type
         .name
         .replaceFirst(
-        widget.pokemon.types
-            .where((element) => element.slot == 1)
-            .first
-            .type
-            .name[0],
-        widget.pokemon.types
-            .where((element) => element.slot == 1)
-            .first
-            .type
-            .name[0]
-            .toUpperCase());
+            widget.pokemon.types
+                .where((element) => element.slot == 1)
+                .first
+                .type
+                .name[0],
+            widget.pokemon.types
+                .where((element) => element.slot == 1)
+                .first
+                .type
+                .name[0]
+                .toUpperCase());
+    name = widget.pokemon.name.toUpperCase();
+    color(type);
     super.initState();
   }
 
@@ -54,18 +59,15 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
       body: Container(
         width: width,
         height: height,
-        decoration: const BoxDecoration(
-          color: Colors.green,
-          image: DecorationImage(
-            image: NetworkImage(pokeballImage),
-          ),
+        decoration: BoxDecoration(
+          color: color(type),
         ),
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Container(
               width: width,
-              height: height * 0.8,
+              height: height * 0.6,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -75,40 +77,39 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
               ),
             ),
             Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.network(
-                  "$imageUrl${widget.pokemon.id}.png",
-                  height: 200,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
                   children: [
-                    Text(
-                      widget.pokemon.name.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Image.network(
+                      "$imageUrl${widget.pokemon.id}.png",
+                      height: 200,
                     ),
                     Text(
-                      type,
+                      name,
                       style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
                     ),
-                    Text(
-                      "Pokedex #${widget.pokemon.id}",
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    TypeIcon(
+                      type: type,
                     ),
                   ],
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 25),
+                  child: Text(
+                    "#${widget.pokemon.id}",
+                    style: const TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 SizedBox(
-                  height: 500,
+                  height: 400,
                   child: Column(
                     children: [
                       Row(
@@ -118,10 +119,13 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                             onTap: () {
                               changeCurrent(About(pokemon: widget.pokemon));
                             },
-                            child: const Text(
-                              "About",
+                            child: Text(
+                              "ABOUT",
                               style: TextStyle(
                                 fontSize: 20,
+                                color: current == About(pokemon: widget.pokemon)
+                                    ? Colors.black
+                                    : Colors.grey,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -130,9 +134,13 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                             onTap: () {
                               changeCurrent(Abilities(pokemon: widget.pokemon));
                             },
-                            child: const Text(
-                              "Abilities",
+                            child: Text(
+                              "ABILITIES",
                               style: TextStyle(
+                                color: current ==
+                                        Abilities(pokemon: widget.pokemon)
+                                    ? Colors.black
+                                    : Colors.grey,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -142,9 +150,12 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                             onTap: () {
                               changeCurrent(Moves(pokemon: widget.pokemon));
                             },
-                            child: const Text(
-                              "Moves",
+                            child: Text(
+                              "MOVES",
                               style: TextStyle(
+                                color: current == Moves(pokemon: widget.pokemon)
+                                    ? Colors.black
+                                    : Colors.grey,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -198,33 +209,100 @@ class About extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Height: ${pokemon.height} m',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                const Text(
+                  'Height:  ',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${pokemon.height} m',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'Weight: ${pokemon.weight} lbs',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                const Text(
+                  'Weight: ',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${pokemon.weight} lbs',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              'Base Experience: ${pokemon.baseExperience}',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              children: [
+                const Text(
+                  'Base Experience: ',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${pokemon.baseExperience}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
             ),
-            Text(
-              'Evolution: ${pokemon.order}',
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            Row(
+              children: [
+                const Text(
+                  'Evolution: ',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${pokemon.order}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+            GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 2,
               ),
+              padding: const EdgeInsets.all(10),
+              scrollDirection: Axis.vertical,
+              itemCount: pokemon.types.length,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TypeIcon(
+                    type: pokemon.types[index].type.name.toUpperCase(),
+                  ),
+                );
+              },
             ),
           ],
         ));
@@ -240,23 +318,47 @@ class Abilities extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    return SizedBox(
-      width: width,
-      height: 400,
-      child: ListView.builder(
-        padding: const EdgeInsets.all(10),
-        itemCount: pokemon.abilities.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              "Ability# ${index + 1} ${pokemon.abilities[index].ability.name.toUpperCase()}",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Column(
+        children: [
+          Text(
+            "Abilities at the moment: ${pokemon.abilities.length}",
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
             ),
-          );
-        },
+          ),
+          SizedBox(
+            width: width,
+            height: 300,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: pokemon.abilities.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Ability# ${index + 1} ${pokemon.abilities[index].ability.name.toUpperCase()}",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
       ),
     );
   }
@@ -270,24 +372,47 @@ class Moves extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-
-    return SizedBox(
-      width: width,
-      height: 400,
-      child: ListView.builder(
-        padding: const EdgeInsets.all(10),
-        itemCount: pokemon.moves.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              "Move# ${index + 1} ${pokemon.moves[index].move.name.toUpperCase()}",
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
+      child: Column(
+        children: [
+          Text(
+            "Moves at the moment: ${pokemon.moves.length}",
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
             ),
-          );
-        },
+          ),
+          SizedBox(
+            width: width,
+            height: 300,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: pokemon.moves.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding (
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "${index + 1}. ${pokemon.moves[index].move.name.toUpperCase()}",
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
       ),
     );
   }

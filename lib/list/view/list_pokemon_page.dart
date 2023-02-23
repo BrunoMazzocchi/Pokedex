@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/widgets/pokemon_card.dart';
 
 import '../bloc/list_pokemon_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListPokemonPage extends StatefulWidget {
   const ListPokemonPage({Key? key}) : super(key: key);
@@ -45,30 +46,24 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
     return  BlocBuilder<ListPokemonBloc, ListPokemonState>(
       builder: (context, state) {
         switch(state.status) {
-
           case ListPokemonStatus.initial:
-            return const Center(child: Text("Loading"));
-            break;
+            return Center(child: Text(AppLocalizations.of(context)!.loading));
           case ListPokemonStatus.loading:
             return const Center(child: CircularProgressIndicator());
-            break;
           case ListPokemonStatus.success:
-            return  Container(
-              padding: const EdgeInsets.only(top: 50),
-              child: ListView.builder(
-                padding: const EdgeInsets.all(0),
-                controller: _scrollController,
-                itemCount: state.hasReachedMax
-                    ? state.pokemons.length
-                    : state.pokemons.length + 1,
-                itemBuilder: (context, index) {
-                  return index >= state.pokemons.length
-                      ? const Center(child: CircularProgressIndicator())
-                      : ListTile(
-                    title: PokemonCard(pokemon: state.pokemons[index]),
-                  );
-                },
-              ),
+            return  ListView.builder(
+              padding: const EdgeInsets.only(top: 10),
+              controller: _scrollController,
+              itemCount: state.hasReachedMax
+                  ? state.pokemons.length
+                  : state.pokemons.length + 1,
+              itemBuilder: (context, index) {
+                return index >= state.pokemons.length
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListTile(
+                  title: PokemonCard(pokemon: state.pokemons[index]),
+                );
+              },
             );
             break;
           case ListPokemonStatus.error:

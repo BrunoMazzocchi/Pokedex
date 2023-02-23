@@ -11,6 +11,7 @@ import 'package:pokedex/search/cubit/pokemon_search_cubit.dart';
 import 'list/bloc/list_pokemon_bloc.dart';
 import 'open_pokemon/view/open_pokemon_page.dart';
 import 'search/view/search_pokemon_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   runApp(const App());
@@ -55,6 +56,8 @@ class PokemonAppView extends StatelessWidget {
     );
 
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       routes: {
         "/open_pokemon": (context) {
           final Pokemon pokemon = ModalRoute.of(context)!.settings.arguments as Pokemon;
@@ -83,6 +86,14 @@ class _NavigationControllerState extends State<NavigationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: Text(AppLocalizations.of(context)!.pokedex,
+        style: const TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold
+        ),),
+      ),
       body: IndexedStack(
         index: _selectedIndex,
         children: const [
@@ -97,14 +108,14 @@ class _NavigationControllerState extends State<NavigationController> {
           });
         },
         selectedIndex: _selectedIndex,
-        destinations: const <Widget>[
+        destinations:  <Widget>[
           NavigationDestination(
-            icon: Icon(CupertinoIcons.square_list_fill),
-            label: "List",
+            icon: const Icon(CupertinoIcons.square_list_fill),
+            label:  AppLocalizations.of(context)!.list,
           ),
           NavigationDestination(
-            icon: Icon(CupertinoIcons.search),
-            label: "Search",
+            icon: const  Icon(CupertinoIcons.search),
+            label: AppLocalizations.of(context)!.search,
           ),
         ],
       ),

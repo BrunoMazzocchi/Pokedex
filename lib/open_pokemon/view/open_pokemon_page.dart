@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poke_client/poke_client.dart';
 import 'package:pokedex/widgets/type_icon.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../constants.dart';
 
 class OpenPokemonPage extends StatefulWidget {
@@ -120,7 +120,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                               changeCurrent(About(pokemon: widget.pokemon));
                             },
                             child: Text(
-                              "ABOUT",
+                              AppLocalizations.of(context)!.about.toUpperCase(),
                               style: TextStyle(
                                 fontSize: 20,
                                 color: current == About(pokemon: widget.pokemon)
@@ -135,7 +135,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                               changeCurrent(Abilities(pokemon: widget.pokemon));
                             },
                             child: Text(
-                              "ABILITIES",
+                              AppLocalizations.of(context)!.abilities.toUpperCase(),
                               style: TextStyle(
                                 color: current ==
                                         Abilities(pokemon: widget.pokemon)
@@ -151,7 +151,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                               changeCurrent(Moves(pokemon: widget.pokemon));
                             },
                             child: Text(
-                              "MOVES",
+                              AppLocalizations.of(context)!.moves.toUpperCase(),
                               style: TextStyle(
                                 color: current == Moves(pokemon: widget.pokemon)
                                     ? Colors.black
@@ -211,9 +211,9 @@ class About extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Text(
-                  'Height:  ',
-                  style: TextStyle(
+                 Text(
+                  "${AppLocalizations.of(context)!.height}: ",
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -230,9 +230,9 @@ class About extends StatelessWidget {
             ),
             Row(
               children: [
-                const Text(
-                  'Weight: ',
-                  style: TextStyle(
+                 Text(
+                  "${AppLocalizations.of(context)!.weight}: ",
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -249,9 +249,9 @@ class About extends StatelessWidget {
             ),
             Row(
               children: [
-                const Text(
-                  'Base Experience: ',
-                  style: TextStyle(
+                 Text(
+                  "${AppLocalizations.of(context)!.base_experience}: ",
+                  style: const TextStyle(
                     color: Colors.grey,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -268,10 +268,10 @@ class About extends StatelessWidget {
             ),
             Row(
               children: [
-                const Text(
-                  'Evolution: ',
-                  style: TextStyle(
-                    color: Colors.grey,
+                 Text(
+                  "${AppLocalizations.of(context)!.evolution}: ",
+                  style: const TextStyle(
+                    color:  Colors.grey,
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
@@ -323,7 +323,7 @@ class Abilities extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Abilities at the moment: ${pokemon.abilities.length}",
+            "${AppLocalizations.of(context)!.abilities_now}: ${pokemon.abilities.length}",
             style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -346,7 +346,7 @@ class Abilities extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Ability# ${index + 1} ${pokemon.abilities[index].ability.name.toUpperCase()}",
+                        "${index + 1}. ${pokemon.abilities[index].ability.name.toUpperCase()}",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -377,7 +377,7 @@ class Moves extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            "Moves at the moment: ${pokemon.moves.length}",
+            "${AppLocalizations.of(context)!.moves_now}: ${pokemon.moves.length}",
             style: const TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,

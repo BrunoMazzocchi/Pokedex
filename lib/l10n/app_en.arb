@@ -1,0 +1,20 @@
+{
+  "pokedex": "Pokedex",
+  "list": "List",
+  "search": "Search",
+  "searchPlaceholder": "Let's look for a pokemon...",
+  "name": "Name",
+  "loading": "Loading...",
+  "searchHint": "You can try to search for a pokemon by name or ID",
+  "searchError": "At this moment, we don't have this pokemon in our database. Please check the spelling or try another one.",
+  "about":"about",
+  "abilities":"abilities",
+  "moves":"moves",
+  "height":"Height",
+  "weight":"Weight",
+  "base_experience":"Base Experience",
+  "evolution":"Evolution",
+  "abilities_now":"Abilities at the moment",
+  "moves_now":"Moves at the moment"
+}
+

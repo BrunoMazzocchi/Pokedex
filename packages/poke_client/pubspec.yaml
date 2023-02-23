@@ -7,8 +7,8 @@ environment:
   sdk: ">=2.19.0 <3.0.0"
 
 dev_dependencies:
-  mocktail: ^0.3.0
   mockito: ^5.0.15
+  mocktail: ^0.3.0
   test: ^1.19.2
   very_good_analysis: ^4.0.0
 dependencies:

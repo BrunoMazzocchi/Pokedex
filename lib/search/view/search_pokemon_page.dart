@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/search/cubit/pokemon_search_cubit.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../widgets/pokemon_card.dart';
 
 class SearchPokemonPage extends StatefulWidget {
@@ -66,7 +66,7 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           children: [
             CupertinoTextField(
@@ -85,7 +85,7 @@ class _AppViewState extends State<AppView> {
                   Radius.circular(10),
                 ),
               ),
-              placeholder: "Let's look for a pokemon...",
+              placeholder: AppLocalizations.of(context)!.searchPlaceholder,
               placeholderStyle: const TextStyle(
                 color: Colors.grey,
               ),
@@ -144,10 +144,10 @@ class NotSearching extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 50),
-      child: const Center(
+      child:  Center(
         child: Text(
-          "You can try to search for a pokemon by name or ID",
-          style: TextStyle(
+             AppLocalizations.of(context)!.searchHint,
+          style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,
           ),
@@ -190,13 +190,13 @@ class NotFoundCard extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 10),
+           Padding(
+            padding: const EdgeInsets.only(left: 10),
             child:  SizedBox(
               width: 220,
               child: Text(
-                "At this moment, we don't have this pokemon in our database. Please check the spelling or try another one.",
-                style: TextStyle(
+                  AppLocalizations.of(context)!.searchError,
+                style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
                   overflow: TextOverflow.ellipsis,

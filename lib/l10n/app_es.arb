@@ -15,5 +15,6 @@
   "base_experience":"Experiencia Base",
   "evolution":"Evolucion",
   "abilities_now":"Habilidades por el momento",
-  "moves_now":"Movimientos por el momento"
+  "moves_now":"Movimientos por el momento",
+  "error": "Error, revisa tu conexion a internet"
 }

@@ -15,6 +15,7 @@
   "base_experience":"Base Experience",
   "evolution":"Evolution",
   "abilities_now":"Abilities at the moment",
-  "moves_now":"Moves at the moment"
+  "moves_now":"Moves at the moment",
+  "error": "Error, please check your internet connection"
 }
 

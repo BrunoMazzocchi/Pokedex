@@ -113,6 +113,7 @@ class _PokemonCardState extends State<PokemonCard> {
           ],
         ),
         onTap: () {
+          FocusScope.of(context).unfocus();
           Navigator.pushNamed(context, "/open_pokemon",
               arguments: widget.pokemon);
         });

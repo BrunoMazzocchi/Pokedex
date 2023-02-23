@@ -2,9 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/widgets/pokemon_card.dart';
-
-import '../bloc/list_pokemon_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../bloc/list_pokemon_bloc.dart';
 
 class ListPokemonPage extends StatefulWidget {
   const ListPokemonPage({Key? key}) : super(key: key);
@@ -65,10 +64,8 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
                 );
               },
             );
-            break;
           case ListPokemonStatus.error:
-            return const Center(child: Text("Error"));
-            break;
+            return  Center(child: Text(AppLocalizations.of(context)!.error));
         }
       }
     );

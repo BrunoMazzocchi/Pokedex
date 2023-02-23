@@ -35,6 +35,8 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+
       body: Container(
         width: width,
         height: height,

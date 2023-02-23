@@ -17,27 +17,22 @@ class PokeApiClient {
 
   Future<Pokemon> search(String path) async {
     final response = await httpClient.get(Uri.parse('$baseUrl$path'));
+    final pokemon = json.decode(response.body) as Map<String, dynamic>;
+
     if (response.statusCode == 200) {
-      final pokemon = json.decode(response.body) as Map<String, dynamic>;
       return Pokemon.fromJson(pokemon);
     } else {
-      throw PokemonError(
-        message: 'Error searching your pokemon',
-        error: response.body,
-      );
+      throw Exception('Pokemon not found');
     }
   }
 
   Future<InfiniteListPokemon> searchAll([int offset = 0]) async {
     final response = await httpClient.get(Uri.parse('https://pokeapi.co/api/v2/pokemon?offset=$offset&limit=30'));
+    final pokemon = json.decode(response.body) as Map<String, dynamic>;
     if (response.statusCode == 200) {
-      final pokemon = json.decode(response.body) as Map<String, dynamic>;
       return InfiniteListPokemon.fromJson(pokemon);
     } else {
-      throw PokemonError(
-        message: 'Error searching your pokemon',
-        error: response.body,
-      );
+      throw Exception('Could not load pokemon list');
     }
   }
 

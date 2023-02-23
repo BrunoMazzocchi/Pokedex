@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poke_client/poke_client.dart';
 import 'package:pokedex/search/cubit/pokemon_search_cubit.dart';
 
 import '../../widgets/pokemon_card.dart';
@@ -30,6 +29,7 @@ class AppView extends StatefulWidget {
 class _AppViewState extends State<AppView> {
   final _textController = TextEditingController();
 
+
   @override
   void initState() {
     super.initState();
@@ -42,7 +42,6 @@ class _AppViewState extends State<AppView> {
   @override
   void dispose() {
     _textController.dispose();
-
     super.dispose();
   }
 
@@ -77,9 +76,7 @@ class _AppViewState extends State<AppView> {
                 ),
               ),
               onChanged: (text) {
-                if (text.isNotEmpty) {
-                  context.read<PokemonSearchCubit>().searchPokemon(text);
-                }
+                  context.read<PokemonSearchCubit>().searchPokemon(text.toLowerCase());
               },
               onTap: _onClearTapped,
             ),
@@ -93,8 +90,8 @@ class _AppViewState extends State<AppView> {
                   return PokemonCard(pokemon: state.pokemon);
                 case PokemonSearchStatus.error:
                   return const NotFoundCard();
-                default:
-                  return const NotFoundCard();
+                case PokemonSearchStatus.initial:
+                  return const NotSearching();
               }
             })
           ],
@@ -105,6 +102,25 @@ class _AppViewState extends State<AppView> {
 }
 
 
+class NotSearching extends StatelessWidget {
+  const NotSearching({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(top: 50),
+      child: const Center(
+        child: Text(
+          "You can try to search for a pokemon by name or ID",
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 
 class NotFoundCard extends StatelessWidget {
@@ -129,15 +145,33 @@ class NotFoundCard extends StatelessWidget {
           ),
         ],
       ),
-      child: const Center(
-        child: Text(
-          "At this time we did not find your pokemon. Please check that the name or ID is correct :D",
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
+      child: Row(
+        children: [
+          Container(
+            width: 100,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage("https://i.quotev.com/f6cisvt6dqba.jpg"),
+              ),
+            ),
           ),
-        ),
-      ),
+          const Padding(
+            padding: EdgeInsets.only(left: 10),
+            child:  SizedBox(
+              width: 220,
+              child: Text(
+                "At this moment, we don't have this pokemon in our database. Please check the spelling or try another one.",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                maxLines: 4,
+              ),
+            ),
+          ),
+        ],
+      )
     );
   }
 }

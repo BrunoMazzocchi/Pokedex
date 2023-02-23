@@ -5,6 +5,7 @@ import '../../constants.dart';
 
 class OpenPokemonPage extends StatefulWidget {
   final Pokemon pokemon;
+
   const OpenPokemonPage({Key? key, required this.pokemon}) : super(key: key);
 
   @override
@@ -12,13 +13,28 @@ class OpenPokemonPage extends StatefulWidget {
 }
 
 class _OpenPokemonPageState extends State<OpenPokemonPage> {
-
-
   late Widget current;
-
+  late String type;
   @override
   void initState() {
     current = About(pokemon: widget.pokemon);
+    type = widget.pokemon.types
+        .where((element) => element.slot == 1)
+        .first
+        .type
+        .name
+        .replaceFirst(
+        widget.pokemon.types
+            .where((element) => element.slot == 1)
+            .first
+            .type
+            .name[0],
+        widget.pokemon.types
+            .where((element) => element.slot == 1)
+            .first
+            .type
+            .name[0]
+            .toUpperCase());
     super.initState();
   }
 
@@ -28,7 +44,6 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -36,7 +51,6 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-
       body: Container(
         width: width,
         height: height,
@@ -46,7 +60,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
             image: NetworkImage(pokeballImage),
           ),
         ),
-        child:  Stack(
+        child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             Container(
@@ -77,9 +91,9 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const Text(
-                      "Type: Fire",
-                      style: TextStyle(
+                    Text(
+                      type,
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -99,7 +113,7 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children:  [
+                        children: [
                           InkWell(
                             onTap: () {
                               changeCurrent(About(pokemon: widget.pokemon));
@@ -138,12 +152,11 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
                           ),
                         ],
                       ),
-                       Expanded(
+                      Expanded(
                         child: current,
                       ),
                     ],
                   ),
-
                 )
               ],
             ),
@@ -168,62 +181,63 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
   }
 }
 
-
 class About extends StatelessWidget {
   final Pokemon pokemon;
-  const About({Key? key, required this.pokemon}) : super(key: key);
 
+  const About({Key? key, required this.pokemon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: const EdgeInsets.all(20),
-      width: width,
-      height: 400,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Height: ${pokemon.height} m',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+        padding: const EdgeInsets.all(20),
+        width: width,
+        height: 400,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Height: ${pokemon.height} m',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text('Weight: ${pokemon.weight} lbs',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            Text(
+              'Weight: ${pokemon.weight} lbs',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text('Base Experience: ${pokemon.baseExperience}',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            Text(
+              'Base Experience: ${pokemon.baseExperience}',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Text('Evolution: ${pokemon.order}',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+            Text(
+              'Evolution: ${pokemon.order}',
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 }
 
 class Abilities extends StatelessWidget {
   final Pokemon pokemon;
+
   const Abilities({Key? key, required this.pokemon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
 
     return SizedBox(
@@ -250,11 +264,11 @@ class Abilities extends StatelessWidget {
 
 class Moves extends StatelessWidget {
   final Pokemon pokemon;
+
   const Moves({Key? key, required this.pokemon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
 
     return SizedBox(

@@ -44,14 +44,26 @@ class _PokemonCardState extends State<PokemonCard> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Pokemon name: ${widget.pokemon.name.replaceFirst(widget.pokemon.name[0], widget.pokemon.name[0].toUpperCase())}",
+                Text("Name: ${widget.pokemon.name.replaceFirst(widget.pokemon.name[0], widget.pokemon.name[0].toUpperCase())}",
                   style: const TextStyle(
                     fontSize: 20,
                   ),),
-                Text("Pokedex #${widget.pokemon.id}",
-                style: const TextStyle(
-                  fontSize: 20,
-                ),),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("Pokedex #${widget.pokemon.id}",
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),),
+                     const SizedBox(
+                      width: 20,
+                     ),
+                     Text(widget.pokemon.types.where((element) => element.slot == 1).first.type.name.replaceFirst(widget.pokemon.types.where((element) => element.slot == 1).first.type.name[0], widget.pokemon.types.where((element) => element.slot == 1).first.type.name[0].toUpperCase()),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),),
+                  ],
+                )
               ],
             ),
           ],

@@ -13,19 +13,23 @@ class PokemonSearchCubit extends Cubit<PokemonSearchState> {
   Future<void> searchPokemon(String name) async {
     emit(state.copyWith(status: PokemonSearchStatus.loading));
 
-    if(name.isEmpty) {
+    final searchName = name.toLowerCase();
+    if (searchName.isEmpty) {
       emit(state.copyWith(status: PokemonSearchStatus.initial));
       return;
     }
 
 
-    try {
-        final pokemon = await _pokemonRepository.search(name);
-        emit(state.copyWith(status: PokemonSearchStatus.success, pokemon: pokemon));
+      try {
+        print("Name: $name");
+        final pokemon = await _pokemonRepository.search(searchName);
+        emit(state.copyWith(
+          status: PokemonSearchStatus.success,
+          pokemon: pokemon,
+        ));
+      } on Exception {
+        emit(state.copyWith(status: PokemonSearchStatus.error));
+      }
 
-    } on Exception {
-      emit(state.copyWith(status: PokemonSearchStatus.error));
-    }
   }
-
 }

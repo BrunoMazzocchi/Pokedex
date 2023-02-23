@@ -18,7 +18,7 @@ class PokeApiClient {
   Future<Pokemon> search(String path) async {
     final response = await httpClient.get(Uri.parse('$baseUrl$path'));
     final pokemon = json.decode(response.body) as Map<String, dynamic>;
-
+    print("URL: '$baseUrl$path'");
     if (response.statusCode == 200) {
       return Pokemon.fromJson(pokemon);
     } else {

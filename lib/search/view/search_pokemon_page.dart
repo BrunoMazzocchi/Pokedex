@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +30,9 @@ class AppView extends StatefulWidget {
 
 class _AppViewState extends State<AppView> {
   final _textController = TextEditingController();
-
-
+  final _node = FocusNode();
+  Timer? _debounceTimer;
+  String _text = '';
   @override
   void initState() {
     super.initState();
@@ -45,6 +48,20 @@ class _AppViewState extends State<AppView> {
     super.dispose();
   }
 
+
+  void _onTextChanged(String text) {
+    if (_debounceTimer?.isActive ?? false) {
+      _debounceTimer?.cancel();
+    }
+    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
+      setState(() {
+        _text = text;
+        context.read<PokemonSearchCubit>().searchPokemon(_text);
+
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -53,6 +70,10 @@ class _AppViewState extends State<AppView> {
         child: Column(
           children: [
             CupertinoTextField(
+              textInputAction: TextInputAction.search,
+              focusNode: _node,
+              keyboardType: TextInputType.text,
+              autofocus: false,
               controller: _textController,
               autocorrect: false,
               style: const TextStyle(
@@ -75,10 +96,24 @@ class _AppViewState extends State<AppView> {
                   color: Colors.grey,
                 ),
               ),
-              onChanged: (text) {
-                  context.read<PokemonSearchCubit>().searchPokemon(text.toLowerCase());
+              suffix: GestureDetector(
+                onTap: () {
+                  _textController.clear();
+                },
+                child: const Icon(
+                  Icons.clear,
+                  color: Colors.grey,
+                ),
+            ),
+
+              onSubmitted: (value) {
+                if(_node.hasFocus) {
+                  _node.unfocus();
+                }
               },
+              suffixMode: OverlayVisibilityMode.editing,
               onTap: _onClearTapped,
+              onChanged: _onTextChanged,
             ),
             const SizedBox(height: 20),
             BlocBuilder<PokemonSearchCubit, PokemonSearchState>(

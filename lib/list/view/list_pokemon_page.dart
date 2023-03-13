@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokedex/widgets/pokemon_card.dart';
+import 'package:pokedex/list/view/components/pokemon_card.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../bloc/list_pokemon_bloc.dart';
 
@@ -50,7 +50,7 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
           case ListPokemonStatus.loading:
             return const Center(child: CircularProgressIndicator());
           case ListPokemonStatus.success:
-            return  ListView.builder(
+            return  GridView.builder(
               padding: const EdgeInsets.only(top: 10),
               controller: _scrollController,
               itemCount: state.hasReachedMax
@@ -62,7 +62,10 @@ class _ListPokemonPageState extends State<ListPokemonPage> {
                     : ListTile(
                   title: PokemonCard(pokemon: state.pokemons[index]),
                 );
-              },
+              }, gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1.5,
+              )
             );
           case ListPokemonStatus.error:
             return  Center(child: Text(AppLocalizations.of(context)!.error));

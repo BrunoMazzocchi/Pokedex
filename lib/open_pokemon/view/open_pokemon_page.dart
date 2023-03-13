@@ -82,9 +82,12 @@ class _OpenPokemonPageState extends State<OpenPokemonPage> {
               children: [
                 Column(
                   children: [
-                    Image.network(
-                      "$imageUrl${widget.pokemon.id}.png",
-                      height: 200,
+                    Hero(
+                      tag:  widget.pokemon.id,
+                      child: Image.network(
+                        "$imageUrl${widget.pokemon.id}.png",
+                        height: 200,
+                      )
                     ),
                     Text(
                       name,

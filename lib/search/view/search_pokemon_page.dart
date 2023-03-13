@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokedex/search/cubit/pokemon_search_cubit.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../widgets/pokemon_card.dart';
+import 'components/pokemon_result_card.dart';
 
 class SearchPokemonPage extends StatefulWidget {
   const SearchPokemonPage({Key? key}) : super(key: key);
@@ -122,7 +121,7 @@ class _AppViewState extends State<AppView> {
                 case PokemonSearchStatus.loading:
                   return const LoadingCard();
                 case PokemonSearchStatus.success:
-                  return PokemonCard(pokemon: state.pokemon);
+                  return PokemonResultCard(pokemon: state.pokemon);
                 case PokemonSearchStatus.error:
                   return const NotFoundCard();
                 case PokemonSearchStatus.initial:

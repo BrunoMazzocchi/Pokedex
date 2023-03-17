@@ -28,9 +28,9 @@ class TypeIcon extends StatelessWidget {
       child: Center(
         child: Text(type.toUpperCase(),
           style: const TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ),),
+              fontSize: 10, fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,
+              fontFamily: 'Rajdhani'),),
       ),
     );
   }

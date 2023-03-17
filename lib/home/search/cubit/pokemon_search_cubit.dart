@@ -21,7 +21,6 @@ class PokemonSearchCubit extends Cubit<PokemonSearchState> {
 
 
       try {
-        print("Name: $name");
         final pokemon = await _pokemonRepository.search(searchName);
         emit(state.copyWith(
           status: PokemonSearchStatus.success,

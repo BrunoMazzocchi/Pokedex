@@ -6,44 +6,44 @@ const String imageUrl =
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
 const String pokeballImage = "https://cdn2.iconfinder.com/data/icons/gaming-stroke-icons/104/22-gaming-pokemon-pokeball-512.png";
 
-Color color (String colorByType) {
+Color? color (String colorByType) {
   switch(colorByType.toLowerCase()) {
     case "normal":
-      return Colors.brown;
+      return Colors.brown[100];
     case "fire":
-      return Colors.redAccent;
+      return Colors.orange[100];
     case "water":
-      return Colors.blue;
+      return Colors.blue[100];
     case "electric":
-      return Colors.yellow;
+      return Colors.yellow[100];
     case "grass":
-      return Colors.green;
+      return Colors.green[100];
     case "ice":
-      return Colors.lightBlueAccent;
+      return Colors.lightBlueAccent[100];
     case "fighting":
-      return Colors.orange;
+      return Colors.orange[100];
     case "poison":
-      return Colors.purple;
+      return Colors.purple[100];
     case "ground":
-      return Colors.brown;
+      return Colors.brown[300];
     case "flying":
-      return Colors.blueGrey;
+      return Colors.blueGrey[100];
     case "psychic":
-      return Colors.pink;
+      return Colors.pink[100];
     case "bug":
-      return Colors.lightGreen;
+      return Colors.lightGreen[100];
     case "rock":
-      return Colors.brown;
+      return Colors.brown[100];
     case "ghost":
-      return Colors.deepPurple;
+      return Colors.deepPurple[100];
     case "dragon":
-      return Colors.deepOrange;
+      return Colors.deepOrange[100];
     case "dark":
-      return Colors.black;
+      return Colors.deepPurple[300];
     case "steel":
       return Colors.grey;
     case "fairy":
-      return Colors.pinkAccent;
+      return Colors.pinkAccent[100];
     default:
       return Colors.white;
   }

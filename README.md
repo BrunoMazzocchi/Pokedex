@@ -5,11 +5,9 @@ This is a Flutter based Pokedex app. It uses the [PokeAPI](https://pokeapi.co/) 
 ## Screen
 <h1 align="center">
 
-<img src="https://user-images.githubusercontent.com/68037905/221052680-1e0b181d-938a-4e7b-81f2-635d6bfa20e0.png" width="170" height="350"/>
-<img src="https://user-images.githubusercontent.com/68037905/221052684-7b33a8be-f69a-41ff-8136-bd57a8526547.png" height="350"/>
-<img src="https://user-images.githubusercontent.com/68037905/221052687-e6574cf6-0051-4666-9ffb-f2c3597c3e12.png" height="350"/>
-<img src="https://user-images.githubusercontent.com/68037905/221052924-458ec86e-5bee-47aa-9ab0-2e77bcbb9155.gif" height="350"/>
-
+<img src="https://user-images.githubusercontent.com/68037905/226382707-9ecf8470-3a60-43a8-a997-3322deb48274.png" width="170" height="350"/>
+<img src="https://user-images.githubusercontent.com/68037905/226382815-2b808ce0-afa9-46fd-98ba-603361ceb1c4.png" height="350"/>
+<img src="https://user-images.githubusercontent.com/68037905/226382894-e715cee0-dc58-469a-aec4-71977cab7f45.png" height="350"/>
 </h1>
 
 ## Dependencies
